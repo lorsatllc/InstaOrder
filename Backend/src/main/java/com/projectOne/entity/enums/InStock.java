@@ -1,4 +1,4 @@
-package com.projectOne.Item;
+package com.projectOne.entity.enums;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

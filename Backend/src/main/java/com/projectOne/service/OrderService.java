@@ -1,15 +1,28 @@
-package com.projectOne.Order;
+package com.projectOne.service;
 
+import com.projectOne.dto.request.CreateOrderRequest;
+import com.projectOne.dto.request.OrderedItemRequest;
+import com.projectOne.dto.response.OrderResponse;
+import com.projectOne.entity.Order;
+import com.projectOne.entity.OrderItem;
+import com.projectOne.entity.enums.OrderStatus;
+import com.projectOne.mapper.OrderMapper;
+import com.projectOne.repository.OrderRepository;
+import com.projectOne.dto.request.OrderStatusUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.projectOne.Customer.Customer;
-import com.projectOne.Customer.CustomerRepository;
+import com.projectOne.entity.Customer;
+import com.projectOne.repository.CustomerRepository;
 import com.projectOne.ExceptionHandling.NotFoundException;
-import com.projectOne.Item.Item;
-import com.projectOne.Item.ItemRepository;
-import com.projectOne.Logger.LoggerService;
+import com.projectOne.entity.Item;
+import com.projectOne.repository.ItemRepository;
+import com.projectOne.Logger.ApplicationLogger;
 
 import jakarta.transaction.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Service
 public class OrderService {
@@ -24,38 +37,35 @@ public class OrderService {
     private ItemRepository itemRepository;
 
     @Autowired
-    private LoggerService loggerService;
+    private ApplicationLogger loggerService;
 
     @Transactional
-    public Order createOrder(Order order, long customer_Id) {
+    public OrderResponse createOrder(CreateOrderRequest request) {
         loggerService.info("Fetching custoemr's details...");
-        Customer customer = customerRepository.findById(customer_Id)
-                .orElseThrow(() -> new NotFoundException("Customer not found!" + customer_Id));
+        Customer customer = customerRepository.findById(request.getCustomerId())
+                .orElseThrow(() -> new NotFoundException("Customer not found!" + request.getCustomerId()));
         loggerService.info("Customer Details: " + customer);
+        Order order = new Order();
         order.setCustomer(customer);
+        order.setOrderDate(LocalDate.now());
+        order.setOrderTime(LocalTime.now());
+        order.setStatus(OrderStatus.ACCEPTED);
 
-        if (order.getOrderItems() != null) {
-            for (OrderItem item : order.getOrderItems()) {
-                item.setOrder(order);
+        for (OrderedItemRequest itemReq : request.getItems()){
 
-                if (item.getItem() == null || item.getItem().getItemId() == null) {
-                    throw new IllegalArgumentException("Each order item must contain an item with an id");
-                }
+            Item item = itemRepository.findById(itemReq.getItemId()).orElseThrow(() -> new NotFoundException("Item Not Found"));
 
-                Integer itemId = item.getItem().getItemId();
-                Item currentItem = itemRepository.findById(itemId).orElseThrow(
-                        () -> new NotFoundException("Item not found with id " + itemId));
-                System.out.println("ITEM OBJECT = " + currentItem);
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItem(item);
+            orderItem.setQuantity(itemReq.getQuantity());
+            orderItem.setUnitPrice(BigDecimal.valueOf(item.getItemPrice()));
 
-                item.setItem(currentItem);
-                item.setOrder(order);
-            }
+            order.addOrderItem(orderItem);
+
         }
-        customer.getOrders().add(order);
-        loggerService.info("Order Confirm: " + order);
 
         Order savedOrder = orderRepository.save(order);
-        return savedOrder;
+        return OrderMapper.toResponse(savedOrder);
     }
 
     public Order getOrderById(long id) {

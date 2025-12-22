@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoggerService {
+public class ApplicationLogger {
 
     private static final Logger logger = LogManager.getLogger("ProjectOneLogger");
 

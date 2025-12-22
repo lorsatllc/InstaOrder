@@ -1,10 +1,12 @@
-package com.projectOne.Customer;
+package com.projectOne.controller;
 
+import com.projectOne.entity.Customer;
+import com.projectOne.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.projectOne.Order.Order;
+import com.projectOne.entity.Order;
 
 import java.util.List;
 

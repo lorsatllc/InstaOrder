@@ -1,4 +1,4 @@
-package com.projectOne.Order;
+package com.projectOne.entity.enums;
 
 public enum OrderStatus {
 

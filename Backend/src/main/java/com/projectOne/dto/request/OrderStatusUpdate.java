@@ -1,5 +1,6 @@
-package com.projectOne.Order;
+package com.projectOne.dto.request;
 
+import com.projectOne.entity.enums.OrderStatus;
 import lombok.Data;
 
 @Data

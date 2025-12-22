@@ -1,11 +1,13 @@
-package com.projectOne.Customer;
+package com.projectOne.service;
 
+import com.projectOne.entity.Customer;
+import com.projectOne.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.projectOne.ExceptionHandling.NotFoundException;
-import com.projectOne.Logger.LoggerService;
-import com.projectOne.Order.Order;
-import com.projectOne.Order.OrderRepository;
+import com.projectOne.Logger.ApplicationLogger;
+import com.projectOne.entity.Order;
+import com.projectOne.repository.OrderRepository;
 
 //import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ public class CustomerService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private LoggerService loggerService;
+    private ApplicationLogger loggerService;
 
     public Customer addCustomer(Customer customer) {
         loggerService.info("Adding new customer: " + customer);

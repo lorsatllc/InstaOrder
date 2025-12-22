@@ -1,5 +1,6 @@
-package com.projectOne.Item;
+package com.projectOne.repository;
 
+import com.projectOne.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

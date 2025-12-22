@@ -1,5 +1,6 @@
-package com.projectOne.Item;
+package com.projectOne.entity;
 
+import com.projectOne.entity.enums.InStock;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

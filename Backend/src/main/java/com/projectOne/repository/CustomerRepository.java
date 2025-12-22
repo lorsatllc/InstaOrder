@@ -1,5 +1,6 @@
-package com.projectOne.Customer;
+package com.projectOne.repository;
 
+import com.projectOne.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

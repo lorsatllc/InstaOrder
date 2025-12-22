@@ -1,12 +1,14 @@
-package com.projectOne.Item;
+package com.projectOne.service;
 
 import java.util.List;
 
+import com.projectOne.entity.Item;
+import com.projectOne.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projectOne.ExceptionHandling.NotFoundException;
-import com.projectOne.Logger.LoggerService;
+import com.projectOne.Logger.ApplicationLogger;
 
 @Service
 public class ItemService {
@@ -15,7 +17,7 @@ public class ItemService {
     private ItemRepository itemRepository;
 
     @Autowired
-    private LoggerService loggerService;
+    private ApplicationLogger loggerService;
 
     public void addItemsInDB(Item item) {
 

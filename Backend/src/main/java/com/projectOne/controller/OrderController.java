@@ -1,5 +1,11 @@
-package com.projectOne.Order;
+package com.projectOne.controller;
 
+import com.projectOne.dto.request.CreateOrderRequest;
+import com.projectOne.entity.Order;
+import com.projectOne.service.OrderService;
+import com.projectOne.dto.request.OrderStatusUpdate;
+import jakarta.validation.Valid;
+import com.projectOne.dto.response.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,11 +22,10 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/orders/{customer_Id}/create")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order, @PathVariable long customer_Id) {
+    @PostMapping("/orders/create")
+    public ResponseEntity<OrderResponse> createOrder(@Valid @RequestBody CreateOrderRequest request) {
 
-        Order createdOrder = orderService.createOrder(order, customer_Id);
-        return ResponseEntity.ok(createdOrder);
+        return ResponseEntity.ok(orderService.createOrder(request));
     }
 
     @GetMapping("/orders/{id}")
