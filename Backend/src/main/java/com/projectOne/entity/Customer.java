@@ -1,5 +1,7 @@
 package com.projectOne.entity;
 
+import com.projectOne.entity.enums.Role;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,16 +29,21 @@ public class Customer {
     @JsonIgnore
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
-    public Customer(Long id, String name, String email, String password) {
+    public Customer(Long id, String name, String email, String password,Role role) {
 
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
 
     }
 

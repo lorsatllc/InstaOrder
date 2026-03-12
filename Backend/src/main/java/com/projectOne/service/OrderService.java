@@ -1,14 +1,15 @@
 package com.projectOne.service;
 
-import com.projectOne.dto.request.CreateOrderRequest;
-import com.projectOne.dto.request.OrderedItemRequest;
-import com.projectOne.dto.response.OrderResponse;
+import com.projectOne.dto.request.orderRequest.CreateOrderRequest;
+import com.projectOne.dto.request.orderRequest.OrderedItemRequest;
+import com.projectOne.dto.request.orderRequest.UpdateOrderStatus;
+import com.projectOne.dto.response.orderResponse.AllOrdersResponse;
+import com.projectOne.dto.response.orderResponse.OrderResponse;
 import com.projectOne.entity.Order;
 import com.projectOne.entity.OrderItem;
 import com.projectOne.entity.enums.OrderStatus;
 import com.projectOne.mapper.OrderMapper;
 import com.projectOne.repository.OrderRepository;
-import com.projectOne.dto.request.OrderStatusUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.projectOne.entity.Customer;
@@ -41,7 +42,7 @@ public class OrderService {
 
     @Transactional
     public OrderResponse createOrder(CreateOrderRequest request) {
-        loggerService.info("Fetching custoemr's details...");
+        loggerService.info("Fetching customer's details...");
         Customer customer = customerRepository.findById(request.getCustomerId())
                 .orElseThrow(() -> new NotFoundException("Customer not found!" + request.getCustomerId()));
         loggerService.info("Customer Details: " + customer);
@@ -114,15 +115,15 @@ public class OrderService {
     }
 
     @Transactional
-    public Order updateOrderStatus(Long id, OrderStatusUpdate newStatus) {
+    public OrderResponse updateOrderStatus(Long id, UpdateOrderStatus newStatus) {
 
         loggerService.info("Updating order status to:: " + newStatus.getStatus());
         Order existingOrder = orderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Order not found with id " + id));
 
-        existingOrder.setStatus(newStatus.getStatus());
+        existingOrder.setStatus(OrderStatus.valueOf(newStatus.getStatus()));
 
-        return existingOrder;
+        return OrderMapper.toResponse(existingOrder);
     }
 
     @Transactional
@@ -138,9 +139,14 @@ public class OrderService {
         orderRepository.delete(existingOrder);
     }
 
-    public Iterable<Order> getAllOrders() {
+    public Iterable<AllOrdersResponse> getAllOrders() {
         loggerService.info("Fetching all orders...");
-        return orderRepository.findAll();
+
+
+        Iterable<Order> result =  orderRepository.findAll();
+
+        return OrderMapper.toOrdersResponse(result);
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.projectOne.dto.response;
+package com.projectOne.dto.response.orderResponse;
 
 import lombok.Builder;
 import lombok.Data;

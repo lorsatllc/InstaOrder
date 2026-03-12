@@ -1,13 +1,15 @@
 package com.projectOne.controller;
 
-import com.projectOne.dto.request.CreateOrderRequest;
+import com.projectOne.dto.request.orderRequest.CreateOrderRequest;
+import com.projectOne.dto.request.orderRequest.UpdateOrderStatus;
+import com.projectOne.dto.response.orderResponse.AllOrdersResponse;
 import com.projectOne.entity.Order;
 import com.projectOne.service.OrderService;
-import com.projectOne.dto.request.OrderStatusUpdate;
 import jakarta.validation.Valid;
-import com.projectOne.dto.response.OrderResponse;
+import com.projectOne.dto.response.orderResponse.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +24,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping("/orders/create")
     public ResponseEntity<OrderResponse> createOrder(@Valid @RequestBody CreateOrderRequest request) {
 
@@ -35,8 +38,8 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public ResponseEntity<Iterable<Order>> getAllOrders() {
-        Iterable<Order> orders = orderService.getAllOrders();
+    public ResponseEntity<Iterable<AllOrdersResponse>> getAllOrders() {
+        Iterable<AllOrdersResponse> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
@@ -47,9 +50,9 @@ public class OrderController {
     }
 
     @PatchMapping("/orders/updatestatus/{id}")
-    public ResponseEntity<Order> updateStatus(@PathVariable Long id, @RequestBody OrderStatusUpdate newStatus) {
+    public ResponseEntity<OrderResponse> updateStatus(@PathVariable Long id, @RequestBody UpdateOrderStatus newStatus) {
 
-        Order updateOrder = orderService.updateOrderStatus(id, newStatus);
+        OrderResponse updateOrder = orderService.updateOrderStatus(id, newStatus);
         return ResponseEntity.ok(updateOrder);
 
     }

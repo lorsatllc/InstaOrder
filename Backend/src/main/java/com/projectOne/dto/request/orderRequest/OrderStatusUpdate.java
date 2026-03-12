@@ -1,4 +1,4 @@
-package com.projectOne.dto.request;
+package com.projectOne.dto.request.orderRequest;
 
 import com.projectOne.entity.enums.OrderStatus;
 import lombok.Data;

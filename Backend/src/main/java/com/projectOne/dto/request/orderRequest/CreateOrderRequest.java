@@ -1,4 +1,4 @@
-package com.projectOne.dto.request;
+package com.projectOne.dto.request.orderRequest;
 
 import lombok.Data;
 import jakarta.validation.constraints.NotEmpty;

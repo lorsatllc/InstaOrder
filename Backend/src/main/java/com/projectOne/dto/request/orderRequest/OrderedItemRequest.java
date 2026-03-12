@@ -1,4 +1,4 @@
-package com.projectOne.dto.request;
+package com.projectOne.dto.request.orderRequest;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
