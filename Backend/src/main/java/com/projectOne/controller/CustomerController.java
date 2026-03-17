@@ -71,7 +71,6 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable long id) {
         service.deleteCustomerById(id);
         return "Account Deleted";
-
     }
 
 }

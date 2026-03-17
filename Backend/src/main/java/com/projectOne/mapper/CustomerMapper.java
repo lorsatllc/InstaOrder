@@ -16,6 +16,7 @@ public class CustomerMapper {
                 .id(customer.getId())
                 .name(customer.getName())
                 .email(customer.getEmail())
+                .role(customer.getRole())
                 .build();
 
     }

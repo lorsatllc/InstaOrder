@@ -41,7 +41,12 @@ public class CustomerService {
         newCustomer.setName(customer.getName());
         newCustomer.setEmail(customer.getEmail());
         newCustomer.setPassword(passwordEncoder.encode(customer.getPassword()));
-        newCustomer.setRole((Role.CUSTOMER));
+        if(customer.getRole()==null || customer.getRole().equals("CUSTOMER")){
+            newCustomer.setRole(Role.CUSTOMER);
+        }
+        else if(customer.getRole().equals("ADMIN")){
+            newCustomer.setRole(Role.ADMIN);
+        }
 
         Customer savedCustomer = repository.save(newCustomer);
 
