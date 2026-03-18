@@ -12,6 +12,7 @@ import lombok.Data;
         "id",
         "name",
         "email",
+
         "password",
         "role"
 })

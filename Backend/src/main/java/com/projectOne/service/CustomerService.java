@@ -41,6 +41,7 @@ public class CustomerService {
         newCustomer.setName(customer.getName());
         newCustomer.setEmail(customer.getEmail());
         newCustomer.setPassword(passwordEncoder.encode(customer.getPassword()));
+
         if(customer.getRole()==null || customer.getRole().equals("CUSTOMER")){
             newCustomer.setRole(Role.CUSTOMER);
         }

@@ -16,6 +16,7 @@ import lombok.Data;
 public class CustomerResponse {
 
     private Long id;
+
     private String name;
     private String email;
     private Role role;
