@@ -16,4 +16,6 @@ public class CreateCustomerRequest {
 
     @NotBlank(message = "Password is required")
     private String password;
+
+    private Role role;
 }
