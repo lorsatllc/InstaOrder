@@ -23,6 +23,7 @@ public class ItemService {
 
         loggerService.info("Adding item in DB: " + item);
         itemRepository.save(item);
+
     }
 
     public List<Item> getAllItemsFromDB() {

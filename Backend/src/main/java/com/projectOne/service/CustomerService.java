@@ -22,14 +22,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepository repository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final CustomerRepository repository;
 
-    @Autowired
-    private ApplicationLogger loggerService;
+
+    private final OrderRepository orderRepository;
+
+
+    private final ApplicationLogger loggerService;
 
 
     private final PasswordEncoder passwordEncoder;
