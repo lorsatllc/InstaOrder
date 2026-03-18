@@ -18,6 +18,12 @@ target/
 *.iws
 *.iml
 *.ipr
+# Ignore IntelliJ IDEA project files
+.idea/
+out/
+
+# Ignore VS Code settings
+.vscode/
 
 ### NetBeans ###
 /nbproject/private/
