@@ -2,6 +2,7 @@ package com.projectOne.dto.response.customerResponse;
 
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.projectOne.entity.enums.Role;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +12,8 @@ import lombok.Data;
         "id",
         "name",
         "email",
-        "password"
+        "password",
+        "role"
 })
 public class CustomerInternalResponse {
 
@@ -19,4 +21,5 @@ public class CustomerInternalResponse {
     private String name;
     private String email;
     private String password;
+    private Role role;
 }
